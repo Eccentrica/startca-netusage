@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import sqlite3
 from datetime import datetime
+import pylab
+import matplotlib
 
 db = "usage.db"
 
@@ -59,8 +61,26 @@ def list_entries(database):
 			date.append(row[1])
 	return usage_gb, date
 
+def plot_usage(x, y):
+	pylab.plot_date(x, y)
+	pylab.savefig('bw_usage.png')
+
 usage = get_usage()
 insert_usage(db, usage)
-print(get_usage())
-print_entries(db)
-print(list_entries(db))
+#print(list_entries(db))
+
+#usage_gb, datetime.strptime(date, "%Y-%m-%e %T") = list_entries(db)
+usage_gb, date = list_entries(db)
+
+#print(usage_gb)
+#print(date)
+
+
+date_parsed = []
+for i in date:
+	date_parsed.append(datetime.strptime(i, "%Y-%m-%d %H:%M:%S.%f"))
+#row[1] = datetime.strptime(row[1], "%Y-%m-%d %H:%M:%S.%f")
+
+print(usage_gb, date_parsed)
+plot_usage(date_parsed, usage_gb)
+

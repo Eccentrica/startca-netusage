@@ -1,0 +1,5 @@
+get current usage from https://www.start.ca/support/usage
+add entry to db with date
+take entry and draw graph
+email daily result
+add classes for data usage and database
